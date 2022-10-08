@@ -1,16 +1,8 @@
 # sample_flutter_202210
 
-A new Flutter project.
+Sample of a Flutter app.
 
-## Getting Started
+Use sample librarie.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [riverpod](https://pub.dev/packages/riverpod) 2.0.x
+- [go_router](https://pub.dev/packages/go_router) 5.0.x
