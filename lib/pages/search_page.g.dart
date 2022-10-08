@@ -29,14 +29,82 @@ class _SystemHash {
   }
 }
 
-String $fetchRepositoriesHash() => r'169338e53af4405d101cd5403ca7f27e8c7e4c81';
+String $fetchRepositoriesHash() => r'97545d9e47a3ce47d63debd5d30b14459092fe8a';
 
 /// See also [fetchRepositories].
-final fetchRepositoriesProvider = AutoDisposeFutureProvider<List<Repository>>(
-  fetchRepositories,
-  name: r'fetchRepositoriesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $fetchRepositoriesHash,
-);
+class FetchRepositoriesProvider
+    extends AutoDisposeFutureProvider<List<Repository>> {
+  FetchRepositoriesProvider({
+    required this.page,
+    this.query = '',
+  }) : super(
+          (ref) => fetchRepositories(
+            ref,
+            page: page,
+            query: query,
+          ),
+          from: fetchRepositoriesProvider,
+          name: r'fetchRepositoriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $fetchRepositoriesHash,
+        );
+
+  final int page;
+  final String query;
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchRepositoriesProvider &&
+        other.page == page &&
+        other.query == query;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, page.hashCode);
+    hash = _SystemHash.combine(hash, query.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 typedef FetchRepositoriesRef = AutoDisposeFutureProviderRef<List<Repository>>;
+
+/// See also [fetchRepositories].
+final fetchRepositoriesProvider = FetchRepositoriesFamily();
+
+class FetchRepositoriesFamily extends Family<AsyncValue<List<Repository>>> {
+  FetchRepositoriesFamily();
+
+  FetchRepositoriesProvider call({
+    required int page,
+    String query = '',
+  }) {
+    return FetchRepositoriesProvider(
+      page: page,
+      query: query,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<List<Repository>> getProviderOverride(
+    covariant FetchRepositoriesProvider provider,
+  ) {
+    return call(
+      page: provider.page,
+      query: provider.query,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'fetchRepositoriesProvider';
+}

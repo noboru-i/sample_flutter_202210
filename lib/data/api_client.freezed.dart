@@ -182,6 +182,7 @@ Repository _$RepositoryFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Repository {
   String get name => throw _privateConstructorUsedError;
+  String get fullName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -194,7 +195,7 @@ abstract class $RepositoryCopyWith<$Res> {
   factory $RepositoryCopyWith(
           Repository value, $Res Function(Repository) then) =
       _$RepositoryCopyWithImpl<$Res>;
-  $Res call({String name});
+  $Res call({String name, String fullName});
 }
 
 /// @nodoc
@@ -208,11 +209,16 @@ class _$RepositoryCopyWithImpl<$Res> implements $RepositoryCopyWith<$Res> {
   @override
   $Res call({
     Object? name = freezed,
+    Object? fullName = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullName: fullName == freezed
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -225,7 +231,7 @@ abstract class _$$_RepositoryCopyWith<$Res>
           _$_Repository value, $Res Function(_$_Repository) then) =
       __$$_RepositoryCopyWithImpl<$Res>;
   @override
-  $Res call({String name});
+  $Res call({String name, String fullName});
 }
 
 /// @nodoc
@@ -241,11 +247,16 @@ class __$$_RepositoryCopyWithImpl<$Res> extends _$RepositoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
+    Object? fullName = freezed,
   }) {
     return _then(_$_Repository(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullName: fullName == freezed
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -254,17 +265,19 @@ class __$$_RepositoryCopyWithImpl<$Res> extends _$RepositoryCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Repository implements _Repository {
-  const _$_Repository({required this.name});
+  const _$_Repository({required this.name, required this.fullName});
 
   factory _$_Repository.fromJson(Map<String, dynamic> json) =>
       _$$_RepositoryFromJson(json);
 
   @override
   final String name;
+  @override
+  final String fullName;
 
   @override
   String toString() {
-    return 'Repository(name: $name)';
+    return 'Repository(name: $name, fullName: $fullName)';
   }
 
   @override
@@ -272,13 +285,16 @@ class _$_Repository implements _Repository {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Repository &&
-            const DeepCollectionEquality().equals(other.name, name));
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.fullName, fullName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(fullName));
 
   @JsonKey(ignore: true)
   @override
@@ -294,13 +310,17 @@ class _$_Repository implements _Repository {
 }
 
 abstract class _Repository implements Repository {
-  const factory _Repository({required final String name}) = _$_Repository;
+  const factory _Repository(
+      {required final String name,
+      required final String fullName}) = _$_Repository;
 
   factory _Repository.fromJson(Map<String, dynamic> json) =
       _$_Repository.fromJson;
 
   @override
   String get name;
+  @override
+  String get fullName;
   @override
   @JsonKey(ignore: true)
   _$$_RepositoryCopyWith<_$_Repository> get copyWith =>
