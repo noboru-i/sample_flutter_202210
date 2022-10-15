@@ -124,7 +124,7 @@ class _SystemHash {
   }
 }
 
-String $apiClientHash() => r'f200a1b1af1cf1724ef1bec24a2e32f2c88fa807';
+String $apiClientHash() => r'306fde5a93b2c930ec67fac8324740a02b059fe7';
 
 /// See also [apiClient].
 final apiClientProvider = AutoDisposeProvider<ApiClient>(

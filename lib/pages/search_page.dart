@@ -70,39 +70,74 @@ class _Body extends HookConsumerWidget {
       children: [
         SearchBar(controller: searchController),
         Expanded(
-          child: ListView.custom(
-            childrenDelegate: SliverChildBuilderDelegate(((context, index) {
-              final page = index ~/ pageSize + 1;
-              final indexInPage = index % pageSize;
-              final repositories = ref.watch(fetchRepositoriesProvider(
-                page: page,
-                query: searchController.text,
-              ));
+          child: RefreshIndicator(
+            onRefresh: () {
+              ref.invalidate(fetchRepositoriesProvider);
+              return ref.read(fetchRepositoriesProvider(
+                      page: 1, query: searchController.text)
+                  .future);
+            },
+            child: ListView.custom(
+              childrenDelegate: SliverChildBuilderDelegate(((context, index) {
+                final page = index ~/ pageSize + 1;
+                final indexInPage = index % pageSize;
+                final repositories = ref.watch(fetchRepositoriesProvider(
+                  page: page,
+                  query: searchController.text,
+                ));
 
-              return repositories.when(
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (_, __) => const Text('Error'),
-                data: (repositories) {
-                  if (indexInPage >= repositories.length) {
-                    return null;
-                  }
+                return repositories.when(
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (_, __) => const Text('Error'),
+                  data: (repositories) {
+                    if (indexInPage >= repositories.length) {
+                      return null;
+                    }
 
-                  final repository = repositories[indexInPage];
+                    final repository = repositories[indexInPage];
 
-                  return ListTile(
-                    title: Text(repository.fullName ?? ''),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DetailPage()),
-                    ),
-                  );
-                },
-              );
-            })),
+                    return _ListItem(
+                      key: ValueKey(repository.fullName),
+                      repository: repository,
+                    );
+                  },
+                );
+              })),
+            ),
           ),
         ),
       ],
     );
   }
+}
+
+class _ListItem extends StatefulWidget {
+  const _ListItem({
+    required this.repository,
+    super.key,
+  });
+
+  final Repository repository;
+
+  @override
+  State<_ListItem> createState() => _ListItemState();
+}
+
+class _ListItemState extends State<_ListItem>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return ListTile(
+      title: Text(widget.repository.fullName),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const DetailPage()),
+      ),
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

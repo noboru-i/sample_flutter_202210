@@ -12,7 +12,9 @@ part 'api_client.g.dart';
 ApiClient apiClient(ApiClientRef ref) {
   final dio = Dio();
   dio.options.headers['Accept'] = 'application/vnd.github.v3+json';
-  dio.interceptors.add(LogInterceptor());
+  dio.interceptors.add(LogInterceptor(
+    responseBody: true,
+  ));
   dio.httpClientAdapter = DefaultHttpClientAdapter()
     ..onHttpClientCreate = (client) {
       client.userAgent = 'sample_flutter_202210';
