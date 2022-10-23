@@ -142,7 +142,6 @@ class ScaffoldWithNavBar extends StatefulWidget {
 
 class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController;
   late final List<_NavBarTabNavigator> _tabs;
 
   int _locationToTabIndex(String location) {
@@ -159,12 +158,6 @@ class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar>
     _tabs = widget.tabs
         .map((ScaffoldWithNavBarTabItem e) => _NavBarTabNavigator(e))
         .toList();
-
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 400),
-    );
-    _animationController.forward();
   }
 
   @override
@@ -180,23 +173,12 @@ class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar>
   }
 
   void _updateForCurrentTab() {
-    final int previousIndex = _currentIndex;
     final location = GoRouter.of(context).location;
     _currentIndex = _locationToTabIndex(location);
 
     final _NavBarTabNavigator tabNav = _tabs[_currentIndex];
     tabNav.pages = widget.pagesForCurrentRoute;
     tabNav.lastLocation = location;
-
-    if (previousIndex != _currentIndex) {
-      _animationController.forward(from: 0.0);
-    }
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override
@@ -214,13 +196,12 @@ class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar>
   }
 
   Widget _buildBody(BuildContext context) {
-    return FadeTransition(
-        opacity: _animationController,
-        child: IndexedStack(
-            index: _currentIndex,
-            children: _tabs
-                .map((_NavBarTabNavigator tab) => tab.buildNavigator(context))
-                .toList()));
+    return IndexedStack(
+      index: _currentIndex,
+      children: _tabs
+          .map((_NavBarTabNavigator tab) => tab.buildNavigator(context))
+          .toList(),
+    );
   }
 
   void _onItemTapped(int index, BuildContext context) {
