@@ -191,6 +191,8 @@ class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar>
             .toList(),
         currentIndex: _currentIndex,
         onTap: (int idx) => _onItemTapped(idx, context),
+        unselectedFontSize: 12,
+        selectedFontSize: 12,
       ),
     );
   }
