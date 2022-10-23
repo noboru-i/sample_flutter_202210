@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -131,10 +132,7 @@ class _ListItemState extends State<_ListItem>
     super.build(context);
     return ListTile(
       title: Text(widget.repository.fullName),
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const DetailPage()),
-      ),
+      onTap: () => GoRouter.of(context).go('/search/detail'),
     );
   }
 
