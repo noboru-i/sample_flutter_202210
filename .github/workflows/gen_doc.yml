@@ -19,25 +19,25 @@ jobs:
 
       - id: riverpod_graph-action
         name: run riverpod_graph-action
-        uses: noboru-i/riverpod_graph-action@v0.1.0
+        uses: noboru-i/riverpod_graph-action_renew@main
 
-      - uses: actions/checkout@v3
-        with:
-          ref: doc
-          path: doc_branch_dir
-      - name: Copy output files
-        run: |
-          cp riverpod_graph.md ./doc_branch_dir
+      # - uses: actions/checkout@v3
+      #   with:
+      #     ref: doc
+      #     path: doc_branch_dir
+      # - name: Copy output files
+      #   run: |
+      #     cp riverpod_graph.md ./doc_branch_dir
 
-      - name: Commit files
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add .
-          git commit -m "Generated from ${GITHUB_SHA}, run by ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" || true
-        working-directory: doc_branch_dir
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          branch: doc
-          directory: doc_branch_dir
+      # - name: Commit files
+      #   run: |
+      #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #     git config --local user.name "github-actions[bot]"
+      #     git add .
+      #     git commit -m "Generated from ${GITHUB_SHA}, run by ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" || true
+      #   working-directory: doc_branch_dir
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     branch: doc
+      #     directory: doc_branch_dir
