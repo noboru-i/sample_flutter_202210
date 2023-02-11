@@ -8,7 +8,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../components/my_app_bar.dart';
 import '../components/search_bar.dart';
 import '../data/api_client.dart';
-import 'detail_page.dart';
 
 part 'search_page.g.dart';
 

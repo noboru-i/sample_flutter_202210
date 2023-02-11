@@ -10,3 +10,13 @@ void main() {
     ),
   );
 }
+
+var productsProvider = Provider<List<int>>((ref) {
+  return [0, 1, 2];
+});
+
+ProviderBase<int> provider = Provider((ref) => 0);
+
+Provider<int> provider2 = Provider((ref) => 0);
+
+final Provider<int> provider3 = Provider((ref) => 0);

@@ -1,0 +1,17 @@
+name: my_lint
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=2.16.0 <3.0.0'
+
+dependencies:
+  analyzer:
+  analyzer_plugin:
+  custom_lint_builder:
+
+  # To align to main repository.
+  collection: 1.17.0
+  matcher: 0.12.13
+  meta: 1.8.0
+  path: 1.8.2
